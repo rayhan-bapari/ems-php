@@ -1,12 +1,6 @@
 /*
     Table of Contents
 
-    Name                 : Ventic
-    Author               : DexignZone
-    Author Portfolio     : https://themeforest.net/user/dexignzone/portfolio
-    
-
-
     Table of Sass Contents
 
     1. Abstracts
@@ -16,7 +10,7 @@
         _mixin
         _variable
 
-    2. bootstrap 
+    2. bootstrap
         -Here goes all official bootstrap scss files
 
     3. Global/Base
@@ -59,13 +53,13 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,600,700");
-@import url("./../icons/fontawesome/css/all.min.css");
-@import url("./../icons/material-design-iconic-font/css/materialdesignicons.min.css");
-@import url("./../icons/themify-icons/css/themify-icons.css");
-@import url("./../icons/line-awesome/css/line-awesome.min.css");
-@import url("./../icons/flaticon/flaticon.css");
-@import url("./../icons/flaticon_1/flaticon_1.css");
-@import url(./../vendor/metismenu/css/metisMenu.min.css);
+@import url("assets/icons/fontawesome/css/all.min.css");
+@import url("assets/icons/material-design-iconic-font/css/materialdesignicons.min.css");
+@import url("assets/icons/themify-icons/css/themify-icons.css");
+@import url("assets/icons/line-awesome/css/line-awesome.min.css");
+@import url("assets/icons/flaticon/flaticon.css");
+@import url("assets/icons/flaticon_1/flaticon_1.css");
+@import url(vendor/metismenu/css/metisMenu.min.css);
 :root {
     --primary: #0E8A74;
     --secondary: #FB3E7A;

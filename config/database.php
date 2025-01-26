@@ -1,21 +1,18 @@
-
 <?php
-require 'config.php';
+require_once 'config.php';
 
-class Database
+function getDatabaseConnection()
 {
-    private $host = DB_SERVER;
-    private $username = DB_USERNAME;
-    private $db_name = DB_NAME;
-    private $password = DB_PASSWORD;
-    public $conn;
-
-    public function __construct()
-    {
-        $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
-        if ($this->conn->connect_errno) {
-            die("Connection failed: " . $this->conn->connect_error);
-        }
+    try {
+        $conn = new PDO(
+            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+            DB_USER,
+            DB_PASS
+        );
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
+    } catch (PDOException $e) {
+        error_log("Connection failed: " . $e->getMessage());
+        die("Database connection failed. Please try again later.");
     }
 }
-?>
