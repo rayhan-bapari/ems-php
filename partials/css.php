@@ -1,3 +1,3 @@
-<link href="../public/vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
-<link class="main-css" href="../public/css/style.css" rel="stylesheet">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="../public/css/app.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">

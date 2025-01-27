@@ -1,36 +1,50 @@
 <?php
 $showError = false;
 $showSuccess = false;
+
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: admin/dashboard.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>
         Register | Event Management
     </title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php include '../partials/css.php'; ?>
+
+    <link href="//cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <?php include '../partials/css.php' ?>
 </head>
 
 <body>
-    <div class="authincation">
-        <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-lg-6 col-md-8">
-                    <div class="authincation-content">
-                        <div class="row no-gutters">
-                            <div class="col-xl-12">
-                                <div class="auth-form">
-                                    <div class="text-center mb-3">
-                                        <a href="#">
-                                            <img src="../public/images/logo-full.png" alt="">
-                                        </a>
-                                    </div>
-                                    <h4 class="text-center mb-4">Sign up your account</h4>
+    <main class="d-flex w-100">
+        <div class="container d-flex flex-column">
+            <div class="row vh-100">
+                <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
+                    <div class="d-table-cell align-middle">
+
+                        <div class="text-center mt-4">
+                            <h1 class="h2">
+                                Welcome!
+                            </h1>
+                            <p class="lead">
+                                Register for an account to continue
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="m-sm-3">
                                     <?php if ($showError) : ?>
                                         <div class="alert alert-danger" role="alert">
                                             <?= $response['message'] ?>
@@ -39,56 +53,40 @@ $showSuccess = false;
 
                                     <?php if ($showSuccess) : ?>
                                         <div class="alert alert-success" role="alert">
-                                            Registration successful. Redirecting...
+                                            <?= $response['message'] ?>
                                         </div>
                                     <?php endif; ?>
+
                                     <form method="post" class="form-register needs-validation" novalidate>
                                         <div class="mb-3">
-                                            <label class="mb-1 form-label">Username</label>
-                                            <input type="text" class="form-control" placeholder="Enter your username" name="username" required>
+                                            <label class="form-label">Username</label>
+                                            <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="mb-1 form-label">Email</label>
-                                            <input type="email" class="form-control" placeholder="hello@example.com" name="email" required>
+                                            <label class="form-label">Email</label>
+                                            <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
                                         </div>
-                                        <div class="mb-3 position-relative">
-                                            <label class="mb-1 form-label">Password</label>
-                                            <input type="password" id="dz-password" class="form-control" name="password" required>
-                                            <span class="show-pass eye">
-                                                <i class="fa fa-eye-slash"></i>
-                                                <i class="fa fa-eye"></i>
-                                            </span>
+                                        <div class="mb-3">
+                                            <label class="form-label">Password</label>
+                                            <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" />
                                         </div>
-                                        <div class="text-center mt-4">
-                                            <button type="submit" id="registerBtn" class="btn btn-primary btn-block">Sign me up</button>
+                                        <div class="d-grid gap-2 mt-3">
+                                            <button type="submit" id="registerBtn" class="btn btn-primary btn-block">Sign up</button>
                                         </div>
                                     </form>
-                                    <div class="new-account mt-3">
-                                        <p>Already have an account? <a class="text-primary" href="login.php">Sign in</a></p>
-                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="text-center mb-3">
+                            Already have an account? <a href="login.php">Sign in</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <script>
-        document.getElementById('dz-password').addEventListener('input', function() {
-            document.querySelector('.eye').classList.add('active');
-        });
-        document.querySelector('.eye').addEventListener('click', function() {
-            if (this.classList.contains('active')) {
-                this.classList.remove('active');
-                document.getElementById('dz-password').setAttribute('type', 'password');
-            } else {
-                this.classList.add('active');
-                document.getElementById('dz-password').setAttribute('type', 'text');
-            }
-        });
-    </script>
+    <?php include '../partials/js.php' ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -140,10 +138,7 @@ $showSuccess = false;
                 } = validateForm();
 
                 if (!isValid) {
-                    const alert = document.createElement('div');
-                    alert.className = 'alert alert-danger';
-                    alert.textContent = errors.join(', ');
-                    form.prepend(alert);
+                    showAlert(errors.join(', '), 'danger');
                     return;
                 }
 
@@ -167,28 +162,30 @@ $showSuccess = false;
                         existingAlerts.forEach(alert => alert.remove());
 
                         if (data.success) {
-                            const alert = document.createElement('div');
-                            alert.className = 'alert alert-success';
-                            alert.textContent = 'Registration successful! Redirecting...';
-                            form.prepend(alert);
-
+                            showAlert(data.message, 'success');
                             setTimeout(() => {
                                 window.location.href = 'login.php';
                             }, 2000);
                         } else {
-                            const alert = document.createElement('div');
-                            alert.className = 'alert alert-danger';
-                            alert.textContent = data.message;
-                            form.prepend(alert);
+                            showAlert(data.message, 'danger');
                         }
                     })
                     .catch(error => {
                         submitButton.disabled = false;
-                        const alert = document.createElement('div');
-                        alert.className = 'alert alert-danger';
-                        alert.textContent = 'An error occurred. Please try again.';
-                        form.prepend(alert);
+                        showAlert('An error occurred. Please try again.', 'danger');
                     });
+            }
+
+
+            function showAlert(message, type) {
+                const alertBox = document.createElement('div');
+                alertBox.className = `alert alert-${type}`;
+                alertBox.textContent = message;
+                const existingAlert = document.querySelector('.alert');
+                if (existingAlert) {
+                    existingAlert.remove();
+                }
+                form.prepend(alertBox);
             }
         });
     </script>

@@ -2,7 +2,8 @@
 require_once '../config/database.php';
 session_start();
 
-function jsonResponse($success, $message) {
+function jsonResponse($success, $message)
+{
     echo json_encode(['success' => $success, 'message' => $message]);
     exit;
 }
@@ -47,5 +48,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 include '../pages/register.php';
-?>
-

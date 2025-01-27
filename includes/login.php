@@ -2,6 +2,12 @@
 require_once '../config/database.php';
 session_start();
 
+function jsonResponse($success, $message)
+{
+    echo json_encode(['success' => $success, 'message' => $message]);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
 
@@ -23,16 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['username'] = $user['username'];
                 jsonResponse(true, 'Login successful');
             } else {
-                jsonResponse(false, 'Invalid credentials');
+                jsonResponse(false, 'Invalid username or password');
             }
         } else {
-            jsonResponse(false, 'Invalid credentials');
+            jsonResponse(false, 'Invalid username or password');
         }
     } catch (PDOException $e) {
         error_log($e->getMessage());
-        jsonResponse(false, 'Login failed');
+        jsonResponse(false, 'An unexpected error occurred. Please try again later.');
     }
+} else {
+    jsonResponse(false, 'Invalid request method');
 }
-
-include '../pages/login.php';
-?>
